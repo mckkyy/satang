@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en" data-theme="volt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0a0b0b">
+<meta name="apple-mobile-web-app-title" content="Satang">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="manifest" href="manifest.json">
+<title>Satang</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{ --font:'Inter',system-ui,-apple-system,sans-serif; color-scheme:dark; }
+
+/* ---------- THEME (Volt) ---------- */
+[data-theme="volt"]{
+  --page:#06110e; --page2:#1f5a45; --page-text:#eaf3ef;
+  --bg:#0a0b0b; --card:#161818; --card2:#202323; --text:#f4f6f5; --muted:#8a918f; --line:#272b2a;
+  --accent:#d6f33f; --on-accent:#0a0b0b; --warn:#ff9f6e; --danger:#ff8a7a;
+  --hero:linear-gradient(135deg,#0c4f4b 0%,#12857a 50%,#4fd67a 100%); --on-hero:#fff; --hero-chip:rgba(255,255,255,.16);
+  --c1:#5fd4cf; --c2:#d6f33f; --c3:#8b5cf6; --c4:#3a3f3e; --c5:#ff9f6e; --chart:#d6f33f; --nav:#000; --nav-icon:#cfd4d2;
+}
+
+/* ---------- PAGE ---------- */
+*{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none!important}
+b{font-weight:500}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+body{font-family:var(--font);min-height:100vh;color:var(--page-text);
+  background:radial-gradient(1100px 650px at 50% -5%,var(--page2),var(--page) 70%);
+  display:flex;flex-direction:column;align-items:center;padding:28px 16px 48px}
+
+/* ---------- PHONE FRAME (desktop preview) ---------- */
+.phone{width:390px;height:844px;background:var(--bg);color:var(--text);border-radius:56px;border:11px solid #0d0d0f;
+  box-shadow:0 0 0 2px #2b2b30,0 40px 80px -20px rgba(0,0,0,.55);position:relative;overflow:hidden}
+.island{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:118px;height:34px;background:#000;border-radius:20px;z-index:5}
+.status{position:absolute;top:0;left:0;right:0;height:52px;display:flex;justify-content:space-between;align-items:center;padding:6px 30px 0;
+  font-weight:500;font-size:15px;z-index:4;background:linear-gradient(var(--bg) 70%,transparent)}
+.status .ic{display:flex;gap:6px;align-items:center}
+.screen{position:absolute;inset:0;overflow-y:auto;padding:58px 18px 120px;scrollbar-width:none;display:none}
+.screen::-webkit-scrollbar{display:none}
+.screen.on{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ---------- COMMON ---------- */
+.muted{color:var(--muted)}
+.top{display:flex;justify-content:space-between;align-items:center;margin:6px 0 16px}
+.hello{display:flex;gap:10px;align-items:center}
+.avatar{width:40px;height:40px;border-radius:50%;background:var(--accent);color:var(--on-accent);display:grid;place-items:center;font-weight:500;font-size:18px}
+.hello small{display:block;font-size:12px;color:var(--muted)}
+.hello b{font-size:16px}
+.icon-btn{width:42px;height:42px;border-radius:50%;background:var(--card);display:grid;place-items:center;position:relative}
+h3{font-size:16px;font-weight:500}
+.card{background:var(--card);border-radius:26px;padding:18px;margin-bottom:14px}
+.card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.card-head span{font-size:13px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;background:var(--card2);font-size:12px;font-weight:500}
+.chip i{width:9px;height:9px;border-radius:50%;display:inline-block}
+
+/* hero */
+.hero{background:var(--hero);color:var(--on-hero);border-radius:30px;padding:22px 22px 20px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-60px;top:-40px;width:220px;height:220px;border-radius:50%;
+  background:repeating-linear-gradient(100deg,rgba(255,255,255,.14) 0 3px,transparent 3px 9px);opacity:.55;transform:rotate(-12deg)}
+.hero-label{font-size:13px;opacity:.85;font-weight:500}
+.big{font-size:46px;font-weight:400;letter-spacing:-.035em;margin:4px 0 12px;line-height:1}
+.big span{font-size:22px;opacity:.7;font-weight:400}
+.hero-pills{display:flex;gap:8px;flex-wrap:wrap;position:relative;z-index:1}
+.hero-pills .p{background:var(--hero-chip);padding:6px 11px;border-radius:999px;font-size:12px;font-weight:500}
+.budget{margin-top:16px;position:relative;z-index:1}
+.budget .bar{height:8px;border-radius:9px;background:rgba(255,255,255,.22);overflow:hidden}
+.budget .bar i{display:block;height:100%;border-radius:9px;background:#fff;transition:width .5s}
+.budget small{display:block;margin-top:7px;font-size:12px;opacity:.85}
+
+.actions{display:flex;gap:8px;margin:14px 0}
+.btn{flex:1;height:50px;border-radius:999px;background:var(--card);font-weight:500;font-size:14px;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn.primary{background:var(--accent);color:var(--on-accent);flex:1.4}
+.btn.round{flex:0 0 50px}
+.btn:disabled{opacity:.5}
+
+.toast{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);padding:11px 14px;border-radius:18px;font-size:13px;font-weight:500;margin-bottom:14px}
+.toast .tick{width:24px;height:24px;border-radius:50%;background:var(--accent);color:var(--on-accent);display:grid;place-items:center;font-size:13px;flex:none}
+.toast.warn .tick{background:var(--warn)}
+.toast.busy .tick{background:var(--card2)}
+.spin{width:14px;height:14px;border:2px solid var(--muted);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* donut */
+.donut-wrap{position:relative;width:210px;height:210px;margin:6px auto 14px}
+.donut-wrap svg{width:100%;height:100%;transform:rotate(-90deg)}
+.donut-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.donut-center b{font-size:26px;font-weight:400;letter-spacing:-.02em}
+.donut-center small{font-size:12px;color:var(--muted);margin-bottom:8px}
+.legend{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+
+/* area chart */
+.area{width:100%;height:150px;display:block;overflow:visible}
+.days{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:8px;padding:0 2px}
+.days .now{color:var(--text);font-weight:500}
+
+/* transactions */
+.section-head{display:flex;justify-content:space-between;align-items:baseline;margin:20px 4px 10px}
+.section-head button{font-size:13px;color:var(--muted);text-decoration:underline;text-underline-offset:3px}
+.tx{list-style:none;background:var(--card);border-radius:26px;padding:6px 14px}
+.tx li{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.tx li:last-child{border-bottom:0}
+.tx li.empty{display:block;cursor:default;text-align:center;color:var(--muted);font-size:13px;line-height:1.5;padding:22px 8px}
+.tx .ico{width:42px;height:42px;border-radius:14px;background:var(--card2);display:grid;place-items:center;font-size:20px;flex:none}
+.tx .info{flex:1;min-width:0}
+.tx .info b{display:block;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tx .info small{font-size:12px;color:var(--muted)}
+.tx .amt{text-align:right;font-weight:500;font-size:14px;white-space:nowrap}
+.tx .amt small{display:block;font-size:11px;font-weight:400;color:var(--muted);margin-top:2px}
+
+/* stats */
+.seg{display:flex;background:var(--card);border-radius:999px;padding:4px;margin:4px 0 18px}
+.seg button{flex:1;height:38px;border-radius:999px;font-weight:500;font-size:14px;color:var(--muted)}
+.seg button.on{background:var(--card2);color:var(--text)}
+.stat-total{text-align:center;margin-bottom:6px}
+.stat-total small{font-size:13px;color:var(--muted)}
+.stat-total b{display:block;font-size:40px;font-weight:400;letter-spacing:-.03em;margin:2px 0 8px}
+.trend{display:inline-flex;gap:4px;align-items:center;background:var(--accent);color:var(--on-accent);border-radius:999px;padding:4px 10px;font-size:12px;font-weight:500}
+.cat{display:flex;align-items:center;gap:12px;padding:10px 0}
+.cat .ico{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-size:18px;background:var(--card2);flex:none}
+.cat .body{flex:1}
+.cat .row{display:flex;justify-content:space-between;font-size:14px;font-weight:500;margin-bottom:7px}
+.cat .row span{color:var(--muted);font-weight:400}
+.track{height:7px;background:var(--card2);border-radius:9px;overflow:hidden}
+.track i{display:block;height:100%;border-radius:9px}
+.goal{display:flex;gap:12px;align-items:center}
+.goal .face{width:44px;height:44px;border-radius:50%;background:var(--card2);display:grid;place-items:center;font-size:20px;flex:none}
+.goal b{font-size:15px;display:block}
+.goal small{font-size:12px;color:var(--muted)}
+
+/* nav */
+.nav{position:absolute;left:50%;transform:translateX(-50%);bottom:24px;background:var(--nav);border-radius:999px;padding:8px;display:flex;gap:6px;
+  box-shadow:0 12px 30px -8px rgba(0,0,0,.5);z-index:6}
+.nav button{width:54px;height:48px;border-radius:999px;display:grid;place-items:center;color:var(--nav-icon);position:relative}
+.nav button.on::after{content:"";position:absolute;bottom:5px;width:4px;height:4px;border-radius:50%;background:var(--accent)}
+.nav button.on{color:#fff}
+.nav .add{background:var(--accent);color:var(--on-accent)!important}
+.nav .add::after{display:none}
+
+/* bottom sheets (forms + menu) */
+.sheet-bg{position:absolute;inset:0;background:rgba(0,0,0,.6);z-index:20;display:flex;align-items:flex-end}
+.sheet{width:100%;background:var(--card);color:var(--text);border-radius:28px 28px 0 0;padding:10px 18px 30px;max-height:92%;overflow:auto;animation:up .25s ease}
+@keyframes up{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+.grab{width:40px;height:5px;border-radius:3px;background:var(--line);margin:0 auto 14px}
+.sheet h3{margin-bottom:4px}
+.sheet .hint{font-size:13px;color:var(--muted);margin-bottom:12px;line-height:1.4}
+.sheet img{display:block;width:100%;max-height:220px;object-fit:contain;border-radius:14px;background:#000;margin:8px 0 12px}
+.amount-field{display:flex;align-items:baseline;gap:4px;font-size:40px;font-weight:300;border-bottom:1px solid var(--line);padding:8px 0 6px;margin-bottom:14px}
+.amount-field input{font-size:40px;font-weight:400;letter-spacing:-.02em}
+.sheet input{background:none;border:0;outline:0;color:var(--text);font:inherit;width:100%;min-width:0}
+.field{display:block;background:var(--card2);border-radius:14px;padding:13px 14px;margin-bottom:10px;font-size:16px!important}
+.label{font-size:12px;color:var(--muted);margin:6px 2px 6px}
+.cat-pick{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.cat-pick button{padding:8px 12px;border-radius:999px;background:var(--card2);font-size:13px}
+.cat-pick button.on{background:var(--accent);color:var(--on-accent)}
+.sheet-actions{display:flex;gap:8px;margin-top:10px}
+.sheet .btn{background:var(--card2)}
+.sheet .btn.primary{background:var(--accent)}
+.btn.danger{color:var(--danger)}
+.menu-item{display:flex;width:100%;align-items:center;gap:12px;padding:15px 4px;border-bottom:1px solid var(--line);font-size:15px;text-align:left}
+.menu-item:last-of-type{border-bottom:0}
+.menu-item.danger{color:var(--danger)}
+.menu-note{font-size:12px;color:var(--muted);line-height:1.5;margin-top:12px}
+
+/* phone width: drop the frame, use the full screen */
+@media (max-width:480px){
+  body{padding:0;background:var(--bg)}
+  .phone{width:100%;height:auto;min-height:100vh;border:0;border-radius:0;box-shadow:none}
+  .island,.status{display:none}
+  .screen{position:relative;inset:auto;padding:calc(env(safe-area-inset-top) + 16px) 16px 120px;overflow:visible}
+  .nav{position:fixed;bottom:calc(env(safe-area-inset-bottom) + 14px)}
+  .sheet-bg{position:fixed}
+}
+</style>
+</head>
+<body>
+
+<div class="phone">
+  <div class="island"></div>
+  <div class="status"><span id="clock">9:41</span>
+    <span class="ic">
+      <svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2.5" width="3" height="9.5" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+      <svg width="26" height="13" viewBox="0 0 26 13"><rect x=".5" y=".5" width="22" height="12" rx="3.5" fill="none" stroke="currentColor" opacity=".5"/><rect x="2.5" y="2.5" width="16" height="8" rx="2" fill="currentColor"/><rect x="24" y="4.5" width="1.5" height="4" rx=".75" fill="currentColor" opacity=".5"/></svg>
+    </span>
+  </div>
+
+  <!-- HOME -->
+  <section class="screen on" id="home">
+    <header class="top">
+      <div class="hello"><div class="avatar">฿</div><div><small id="greeting">Hello</small><b>Your spending</b></div></div>
+      <button class="icon-btn" id="moreTop" aria-label="Menu">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+      </button>
+    </header>
+
+    <div class="hero">
+      <div class="hero-label" id="heroLabel">Spent today</div>
+      <div class="big" id="heroBig">฿0<span>.00</span></div>
+      <div class="hero-pills" id="heroPills"></div>
+      <div class="budget"><div class="bar"><i id="budgetBar" style="width:0"></i></div><small id="budgetText"></small></div>
+    </div>
+
+    <div class="actions">
+      <button class="btn primary" id="addSlips"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Add slips</button>
+      <button class="btn" id="addCash">฿ Cash</button>
+      <button class="btn round" id="moreBtn" aria-label="More">•••</button>
+    </div>
+    <input type="file" id="fileInput" accept="image/*" multiple hidden>
+
+    <div class="toast" id="toast" hidden></div>
+
+    <div class="card">
+      <div class="card-head"><h3 id="monthName">This month</h3><span class="muted">Monthly budget</span></div>
+      <div class="donut-wrap">
+        <svg viewBox="0 0 160 160" id="donut"></svg>
+        <div class="donut-center"><b id="donutTotal">฿0</b><small id="donutOf">of ฿20,000</small><span class="chip" id="donutPct">0% used</span></div>
+      </div>
+      <div class="legend" id="legend"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><h3>Last 7 days</h3><span class="muted" id="weekAvg"></span></div>
+      <svg class="area" id="weekChart" viewBox="0 0 320 150" preserveAspectRatio="none"></svg>
+      <div class="days" id="weekDays"></div>
+    </div>
+
+    <div class="section-head"><h3 id="listTitle">Today</h3><button id="seeAll">See all</button></div>
+    <ul class="tx" id="txList"></ul>
+  </section>
+
+  <!-- STATS -->
+  <section class="screen" id="stats">
+    <header class="top">
+      <button class="icon-btn" aria-label="Back" data-go="home"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+      <h3>Statistics</h3>
+      <span style="width:42px"></span>
+    </header>
+    <div class="seg" id="seg"><button data-r="week" class="on">Week</button><button data-r="month">Month</button></div>
+    <div class="stat-total"><small id="statLabel"></small><b id="statTotal">฿0</b><span class="trend" id="statTrend" hidden></span></div>
+    <div class="card" style="margin-top:16px">
+      <svg class="area" id="statChart" viewBox="0 0 320 150" preserveAspectRatio="none"></svg>
+      <div class="days" id="statDays"></div>
+    </div>
+    <div class="card">
+      <div class="card-head"><h3>By category</h3><span class="muted" id="catMonth"></span></div>
+      <div id="cats"></div>
+    </div>
+    <div class="card">
+      <div class="goal"><div class="face" id="goalFace">🙂</div><div><b id="goalTitle"></b><small id="goalText"></small></div></div>
+    </div>
+  </section>
+
+  <nav class="nav">
+    <button class="on" data-go="home" aria-label="Home"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 3 10v10a1 1 0 0 0 1 1h5v-6h6v6h5a1 1 0 0 0 1-1V10z"/></svg></button>
+    <button data-go="stats" aria-label="Statistics"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="18" height="18" rx="5"/><rect x="7.5" y="11" width="2.4" height="6" rx="1.2" fill="var(--nav)"/><rect x="13.5" y="7" width="2.4" height="10" rx="1.2" fill="var(--nav)"/></svg></button>
+    <button class="add" id="navAdd" aria-label="Add slips"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+    <button id="navMenu" aria-label="Menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="4.2"/><path d="M4 20c.8-4 4-6 8-6s7.2 2 8 6z"/></svg></button>
+  </nav>
+
+  <!-- ADD / EDIT FORM -->
+  <div class="sheet-bg" id="sheet" hidden>
+    <form class="sheet" id="form" autocomplete="off">
+      <div class="grab"></div>
+      <h3 id="formTitle">Add cash spending</h3>
+      <p class="hint" id="formHint" hidden>We couldn't read the amount on this slip. Please type it in and we'll save it.</p>
+      <img id="formImg" alt="Slip" hidden>
+      <label class="amount-field">฿<input id="fAmount" inputmode="decimal" placeholder="0" aria-label="Amount"></label>
+      <input class="field" id="fName" placeholder="What was it? (e.g. Street food)" aria-label="Description">
+      <div class="label">Category</div>
+      <div class="cat-pick" id="fCats"></div>
+      <div class="label">When</div>
+      <input class="field" type="datetime-local" id="fWhen" aria-label="Date and time">
+      <div class="sheet-actions">
+        <button type="button" class="btn danger" id="fDelete" hidden>Delete</button>
+        <button type="button" class="btn" id="fCancel">Cancel</button>
+        <button type="submit" class="btn primary">Save</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- MENU -->
+  <div class="sheet-bg" id="menu" hidden>
+    <div class="sheet">
+      <div class="grab"></div>
+      <button class="menu-item" id="mExport">⬇️ Download a backup</button>
+      <button class="menu-item" id="mImport">⬆️ Restore from a backup</button>
+      <button class="menu-item danger" id="mClear">🗑️ Delete all my data</button>
+      <input type="file" id="importInput" accept="application/json,.json" hidden>
+      <p class="menu-note">Your payments are stored only on this phone. Nothing is uploaded. Download a backup now and then so you don't lose them if Safari's data gets cleared.</p>
+      <div class="sheet-actions"><button class="btn" id="mClose">Close</button></div>
+    </div>
+  </div>
+</div>
+
+<script src="slip.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
